@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira:wght@300;400;600;700&display=swap');
+
 body {
-    background: #d9d9d9;
-    font-family: "Segoe UI", Arial, sans-serif;
+    background: #ADD8E6;
+    font-family: "Saira", sans-serif;
     margin: 0;
 }
 
+/* LAYOUT */
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -11,45 +14,52 @@ body {
     gap: 25px;
 }
 
+/* CARD */
 .card {
-    background: #3d3d3d;
+    background: #ffffff;
     padding: 25px;
     border-radius: 14px;
-    color: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    color: #222;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
     animation: fadeIn 0.4s ease;
+    transition: 0.2s;
 }
 
 .card h2 {
     text-align: center;
     margin-top: 0;
     font-size: 22px;
-    letter-spacing: 1px;
+    letter-spacing: .5px;
+    color: #012c57;
 }
 
-/* LISTAGEM */
+/* LISTAGEM GRANDE */
 .listagem {
     grid-row: span 2;
 }
 
+/* TABELAS */
 table {
     width: 100%;
     margin-top: 10px;
     border-collapse: collapse;
+    font-family: "Saira";
 }
 
 th {
-    background: #2f2f2f;
+    background: #012c57;
+    color: white;
     padding: 10px;
-    border-bottom: 2px solid #555;
+    border-bottom: 2px solid #0d3f6b;
+    font-weight: 600;
 }
 
 td {
     padding: 8px;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #ccc;
 }
 
-/* QUANTIDADES COM TABELA */
+/* QUANTIDADES */
 .quantidade table {
     width: 100%;
     border-collapse: collapse;
@@ -57,13 +67,14 @@ td {
 }
 
 .quantidade td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #555;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
     font-size: 16px;
 }
 
 .quantidade td:nth-child(1) {
     font-weight: bold;
+    color: #012c57;
 }
 
 /* GRÁFICO */
@@ -72,16 +83,12 @@ td {
     height: 320px;
 }
 
-/* Animação */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* TABELA DE ASSINATURAS */
 #tabelaAssinaturas {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
+  font-family: "Saira";
 }
 
 #tabelaAssinaturas th,
@@ -92,10 +99,24 @@ td {
 }
 
 #tabelaAssinaturas th {
-  background: #f4f4f4;
+  background: #012c57;
+  color: #fff;
   font-weight: bold;
 }
 
 #tabelaAssinaturas tr:nth-child(even) {
-  background: #fafafa;
+  background: #f9f9f9;
+}
+
+/* Animação */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 800px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
 }
