@@ -6,6 +6,17 @@ body {
     margin: 0;
 }
 
+.page-title {
+    font-family: "Saira", sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    color: #012c57; /* azul principal */
+    margin: 25px 0 10px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #003366; /* azul claro */
+}
+
 /* LAYOUT */
 .container {
     display: grid;
