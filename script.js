@@ -3,7 +3,7 @@
 /* ========================================================================== */
 
 // URL do Web App do Google Apps Script
-const API_URL = "https://script.google.com/macros/s/AKfycbyI1fifn5bzmLtp6-U1SuaQJFvxll-LRY76tTc9YQlxVJw8-G1PT0AYG7w5f2sMOI9R/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwgNP_ApxmGASboodIlLjABHp3LrDDUun8qe20rZ_0MI_wD18YhKoUcinwgBaPOqco/exec";
 
 // Carrega Google Charts
 google.charts.load("current", { packages: ["corechart"] });
