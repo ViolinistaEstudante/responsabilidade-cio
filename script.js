@@ -1,9 +1,17 @@
-// URL do seu Web App do Google Apps Script:
+/* ========================================================================== */
+/* CONFIGURAÇÃO */
+/* ========================================================================== */
+
+// URL do Web App do Google Apps Script
 const API_URL = "https://script.google.com/macros/s/AKfycbyI1fifn5bzmLtp6-U1SuaQJFvxll-LRY76tTc9YQlxVJw8-G1PT0AYG7w5f2sMOI9R/exec";
 
 // Carrega Google Charts
 google.charts.load("current", { packages: ["corechart"] });
 google.charts.setOnLoadCallback(carregarDados);
+
+/* ========================================================================== */
+/* BUSCA DE DADOS */
+/* ========================================================================== */
 
 async function carregarDados() {
     try {
@@ -12,33 +20,37 @@ async function carregarDados() {
 
         renderListagem(dados.listagem);
         renderQuantidade(dados.quantidade);
-        renderGrafico(dados.assinaturas);
+        atualizarTabelaAssinaturas(dados.assinaturas);
+        renderGraficoAssinaturas(dados.assinaturas);
 
-    } catch (e) {
-        console.error("Erro ao carregar dados:", e);
+    } catch (erro) {
+        console.error("Erro ao carregar dados:", erro);
     }
 }
 
-/* -------------------------------------------------------------------------- */
+/* ========================================================================== */
 /* LISTAGEM DE MOTORISTAS */
-/* -------------------------------------------------------------------------- */
+/* ========================================================================== */
 
 function renderListagem(lista) {
     const tbody = document.querySelector("#listaMotoristas tbody");
     tbody.innerHTML = "";
 
     lista.forEach(item => {
-        tbody.innerHTML += `
-            <tr>
-                <td>${item.matricula}</td>
-                <td>${item.nome}</td>
-            </tr>`;
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${item.matricula}</td>
+            <td>${item.nome}</td>
+        `;
+
+        tbody.appendChild(tr);
     });
 }
 
-/* -------------------------------------------------------------------------- */
+/* ========================================================================== */
 /* TABELA DE QUANTIDADES */
-/* -------------------------------------------------------------------------- */
+/* ========================================================================== */
 
 function renderQuantidade(q) {
     const tbody = document.querySelector("#tabelaQuantidade tbody");
@@ -52,29 +64,47 @@ function renderQuantidade(q) {
     `;
 }
 
-function atualizarTabelaAssinaturas(dados) {
-    const total = dados.length;
+/* ========================================================================== */
+/* TABELA DE ASSINATURAS */
+/* ========================================================================== */
 
-    const assinados = dados.filter(l => l.assinou === true).length;
-    const naoAssinados = dados.filter(l => l.assinou === false).length;
-
-    const pAssinados = total > 0 ? ((assinados / total) * 100).toFixed(1) + "%" : "0%";
-    const pNaoAssinados = total > 0 ? ((naoAssinados / total) * 100).toFixed(1) + "%" : "0%";
-
+function atualizarTabelaAssinaturas(a) {
     const tbody = document.querySelector("#tabelaAssinaturas tbody");
 
     tbody.innerHTML = `
         <tr>
             <td>Assinaram</td>
-            <td>${assinados}</td>
-            <td>${pAssinados}</td>
+            <td>${a.assinadosQtd}</td>
+            <td>${(a.assinadosPorc * 100).toFixed(1)}%</td>
         </tr>
         <tr>
             <td>Não Assinaram</td>
-            <td>${naoAssinados}</td>
-            <td>${pNaoAssinados}</td>
+            <td>${a.naoAssinadosQtd}</td>
+            <td>${(a.naoAssinadosPorc * 100).toFixed(1)}%</td>
         </tr>
     `;
 }
 
-atualizarTabelaAssinaturas(dados);
+/* ========================================================================== */
+/* GRÁFICO DE ASSINATURAS (GOOGLE CHARTS) */
+/* ========================================================================== */
+
+function renderGraficoAssinaturas(a) {
+    const data = google.visualization.arrayToDataTable([
+        ["Status", "Quantidade"],
+        ["Assinaram", a.assinadosQtd],
+        ["Não Assinaram", a.naoAssinadosQtd]
+    ]);
+
+    const options = {
+        title: "Situação das Assinaturas",
+        pieHole: 0.4,
+        legend: { position: "bottom" }
+    };
+
+    const chart = new google.visualization.PieChart(
+        document.getElementById("graficoAssinaturas")
+    );
+
+    chart.draw(data, options);
+}
